@@ -1,23 +1,11 @@
-import api, { ensureCsrfCookie } from './api';
+import api from './api';
 
+// Pure token-based auth — no CSRF cookie needed (works across domains).
 export const authService = {
-  // These hit Sanctum's stateful API, so grab the CSRF cookie first.
-  login: async (data) => {
-    await ensureCsrfCookie();
-    return api.post('/auth/login', data);
-  },
-  register: async (data) => {
-    await ensureCsrfCookie();
-    return api.post('/auth/register', data);
-  },
-  forgotPassword: async (data) => {
-    await ensureCsrfCookie();
-    return api.post('/auth/forgot-password', data);
-  },
-  resetPassword: async (data) => {
-    await ensureCsrfCookie();
-    return api.post('/auth/reset-password', data);
-  },
+  login: (data) => api.post('/auth/login', data),
+  register: (data) => api.post('/auth/register', data),
+  forgotPassword: (data) => api.post('/auth/forgot-password', data),
+  resetPassword: (data) => api.post('/auth/reset-password', data),
   validateResetToken: (data) => api.post('/auth/validate-reset-token', data),
 
   logout: () => api.post('/auth/logout'),

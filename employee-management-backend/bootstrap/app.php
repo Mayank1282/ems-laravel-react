@@ -19,7 +19,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => AdminMiddleware::class,
             'staff' => StaffMiddleware::class,
         ]);
-        $middleware->statefulApi();
+        // Pure Bearer-token API auth (no stateful/SPA cookies) — works cleanly
+        // across domains (e.g. Vercel frontend + Railway backend), no CSRF cookie needed.
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
