@@ -1,0 +1,28 @@
+# ===== Root monorepo .gitignore (Laravel backend + React frontend) =====
+
+# Secrets / env — NEVER commit (but keep the example files)
+**/.env
+**/.env.*.local
+!**/.env.example
+
+# ---- Backend (Laravel) ----
+employee-management-backend/vendor/
+employee-management-backend/node_modules/
+employee-management-backend/public/build/
+employee-management-backend/public/hot
+employee-management-backend/public/storage
+employee-management-backend/storage/*.key
+employee-management-backend/storage/logs/*.log
+employee-management-backend/.phpunit.result.cache
+# (Laravel's own nested .gitignore files keep storage/* & bootstrap/cache folder structure)
+
+# ---- Frontend (React / Vite) ----
+employee-management-frontend/node_modules/
+employee-management-frontend/dist/
+employee-management-frontend/.vite/
+
+# ---- OS / editor ----
+.DS_Store
+Thumbs.db
+*.log
+.idea/
