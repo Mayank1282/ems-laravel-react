@@ -1,9 +1,0 @@
-# Force a PHP-only build (this is a pure API — no npm/Vite step needed).
-# Prevents Railway/Nixpacks from running `npm install` (which OOM-killed: exit 137).
-providers = ["php"]
-
-[phases.install]
-cmds = ["composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist"]
-
-[start]
-cmd = "php artisan migrate --force && php artisan serve --host 0.0.0.0 --port $PORT"
