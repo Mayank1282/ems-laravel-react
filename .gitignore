@@ -21,8 +21,9 @@ employee-management-frontend/node_modules/
 employee-management-frontend/dist/
 employee-management-frontend/.vite/
 
-# ---- OS / editor ----
+# ---- OS / editor / tooling ----
 .DS_Store
 Thumbs.db
 *.log
 .idea/
+.claude/
