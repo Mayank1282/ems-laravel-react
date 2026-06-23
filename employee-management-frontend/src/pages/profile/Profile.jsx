@@ -10,6 +10,7 @@ import Avatar from '../../components/ui/Avatar';
 
 export default function Profile() {
   const { user, updateUser } = useAuth();
+  const isAdmin = user?.role === 'admin';
   const fileRef = useRef(null);
   const [form, setForm] = useState({ name: '', email: '' });
   const [errors, setErrors] = useState({});
@@ -29,7 +30,8 @@ export default function Profile() {
     e.preventDefault();
     setSaving(true);
     try {
-      const { data } = await profileService.update(form);
+      const payload = isAdmin ? { name: form.name } : form;
+      const { data } = await profileService.update(payload);
       updateUser(data.data);
       toast.success('Profile updated.');
     } catch (err) {
@@ -89,7 +91,7 @@ export default function Profile() {
           </div>
           <div className="min-w-0">
             <h2 className="text-lg font-bold text-slate-100">{user?.name}</h2>
-            <p className="text-sm text-slate-500 break-all">{user?.email}</p>
+            {!isAdmin && <p className="text-sm text-slate-500 break-all">{user?.email}</p>}
             <div className="flex items-center justify-center sm:justify-start gap-2 mt-2">
               <Shield size={14} className="text-violet-400" />
               <span className="text-sm font-semibold text-violet-400 capitalize">{user?.role}</span>
@@ -117,15 +119,17 @@ export default function Profile() {
               error={errors.name?.[0]}
               required
             />
-            <Input
-              label="Email Address"
-              type="email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              error={errors.email?.[0]}
-              required
-            />
+            {!isAdmin && (
+              <Input
+                label="Email Address"
+                type="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                error={errors.email?.[0]}
+                required
+              />
+            )}
           </div>
           <div className="pt-1">
             <Button type="submit" loading={saving}>
